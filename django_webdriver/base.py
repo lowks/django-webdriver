@@ -59,7 +59,7 @@ class MetaSelenium(type):
         return cls
 
 
-class DjSelBaseCase(LiveServerTestCase):
+class DjangoWebdriverTestCase(LiveServerTestCase):
     '''
         It is the parent class of all selenium test.
         The metaclass is overloaded to create the methods for each webdriver before the 
@@ -75,7 +75,7 @@ class DjSelBaseCase(LiveServerTestCase):
             by the method that wrap the test. To quit the webriver in all the 
             case we quit it in the tearDown.
         '''
-        super(DjSelBaseCase, self).tearDown()
+        super(DjangoWebdriverTestCase, self).tearDown()
         if(hasattr(self, "webdriver")):
             self.webdriver.quit()
 

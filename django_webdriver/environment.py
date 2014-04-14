@@ -5,7 +5,7 @@ from django.conf import settings
 from django_webdriver.message import Message
 from django_webdriver.webdriver import LocalWebdriver, RemoteWebdriver
 
-SETTINGS =  settings.DJSEL_SETTINGS
+SETTINGS =  settings.DJANGO_WEBDRIVER_SETTINGS
 
 
 class Environment(object):

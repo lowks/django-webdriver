@@ -12,7 +12,7 @@ from django_nose.management.commands.test import Command
 
 from django_webdriver.message import Message
 
-SETTINGS = getattr(settings, "DJSEL_SETTINGS", {})
+SETTINGS = getattr(settings, "DJANGO_WEBDRIVER_SETTINGS", {})
 
 class Command(Command):
 
