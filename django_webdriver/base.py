@@ -6,7 +6,7 @@ from functools import wraps
 
 from django.test import LiveServerTestCase
 
-from core.environment import Environment
+from django_webdriver.environment import Environment
 
 
 class MetaSelenium(type):

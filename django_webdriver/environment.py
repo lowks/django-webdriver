@@ -2,8 +2,8 @@ import os
 
 from django.conf import settings
 
-from core.message import Message
-from core.webdriver import LocalWebdriver, RemoteWebdriver
+from django_webdriver.message import Message
+from django_webdriver.webdriver import LocalWebdriver, RemoteWebdriver
 
 SETTINGS =  settings.DJSEL_SETTINGS
 

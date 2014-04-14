@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
-from core.message import Message
+from django_webdriver.message import Message
 
 
 class WebdriverError(object):

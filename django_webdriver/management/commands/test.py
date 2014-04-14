@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 
 from django_nose.management.commands.test import Command
 
-from core.message import Message
+from django_webdriver.message import Message
 
 SETTINGS = getattr(settings, "DJSEL_SETTINGS", {})
 
