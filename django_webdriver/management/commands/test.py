@@ -42,18 +42,21 @@ class Command(Command):
         elif not options.get('isAll'):
             sys.argv.append('--exclude=tests_selenium*')
 
+    def _set_live_server(self, **options):
+        if options.get('liveserver'):
+                port = urlparse(options['liveserver']).port
+        else:
+            port = '8081'
+        ip = socket.gethostbyname(socket.gethostname())
+        os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = '{ip}:{p}'.format(ip=ip,
+            p=port)
 
     def _set_test_env(self, **options):
         if (options.get('isSelenium') or options.get('isAll') or
             options.get('remote_provider')):
-            if options.get('liveserver'):
-                port = urlparse(options['liveserver']).port
-            else:
-                port = '8081'
-            ip = socket.gethostbyname(socket.gethostname())
-            os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = '{ip}:{p}'.format(ip=ip,
-                p=port)
- 
+            
+            self._set_live_server(**options)
+
             if options.get('isSelenium') or options.get('isAll'):
                 if options.get('webdriver'):
                     os.environ['DJANGO_NOSE_WEBDRIVER'] = options['webdriver']
