@@ -19,6 +19,9 @@ setup(
         'selenium>=2.30',
         'django-nose>=1.1',
     ],
+    setup_requires=[
+        'setuptools_git>=1.0',
+    ]
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
