@@ -33,7 +33,7 @@ class MetaSelenium(type):
             the runing of the method.
         '''
 
-        def _build_new_method(function, name, webdriver):
+        def _build_new_method(function, name, webdriver, setup, teardown):
             '''
                 Decorator to init a webdriver before the running of the method.
             '''
@@ -41,21 +41,44 @@ class MetaSelenium(type):
             def wrapper(self, *args, **kwargs):
                 self.webdriver =  Environment.init_webdriver(webdriver)
                 if self.webdriver:
-                    return function(self, *args, **kwargs)
-
+                    try:
+                        if setup:
+                            setup(self)
+                    except:
+                        self.webdriver.quit()
+                        raise
+                    else:
+                        try:
+                            result = function(self, *args, **kwargs)
+                        except:
+                            raise
+                        finally:
+                            teardown(self)
+                            self.webdriver.quit()
+                    return result
 
             wrapper.__name__= name
             return wrapper
 
         functions = [func for func in list(cls.__dict__.items()) if type(func[1]) == types.FunctionType]
+        setup = getattr(cls, 'setUp') if hasattr(cls, 'setUp') else None
+        teardown = getattr(cls, 'tearDown') if hasattr(cls, 'tearDown') else None
         for name, function in list(functions):
             if name.startswith("test"):
                 for webdriver in Environment.get_webdrivers():
                     new_name = "{name}_on_{webdriver}".format(name=name,
                                 webdriver=webdriver)
                     setattr(cls, new_name, _build_new_method(function, new_name,
-                                            webdriver))
+                                            webdriver, setup, teardown))
                 delattr(cls, name)
+
+        def dummy(self):
+            pass
+
+        if setup:
+            cls.setUp = dummy
+        if teardown:
+            cls.tearDown = dummy
         return cls
 
 
@@ -68,14 +91,3 @@ class DjangoWebdriverTestCase(LiveServerTestCase):
         do that for you.
     '''
     __metaclass__ = MetaSelenium
-
-    def tearDown(self):
-        '''
-            If an exception is raised in one test, the webdriver is never quit
-            by the method that wrap the test. To quit the webriver in all the 
-            case we quit it in the tearDown.
-        '''
-        super(DjangoWebdriverTestCase, self).tearDown()
-        if(hasattr(self, "webdriver")):
-            self.webdriver.quit()
-
