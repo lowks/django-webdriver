@@ -88,3 +88,31 @@ DJANGO_WEBDRIVER_SETTINGS = {
     }
 }
 ```
+
+### Write selenium tests
+
+To write selenium tests you have to name the files `tests_selenium.py`. You may also use a python module name `tests_selenium` but you have to define your test files in the `__init__.py`.  
+
+Your selenium test classes have to inherit of `django_webdriver.base.DjangoWebdriverTestCase`.
+You have not to manage the life cycle of the webdriver in the setUp or in the tearDown methods. The webdriver is instanciated before the setUp and it is stoped after the tearDown, so you may use it in these methods.
+
+```python
+from django_webdriver.base import DjangoWebdriverTestCase
+
+class TestSelenium(DjangoWebdriverTestCase):
+
+    def setUp(self):
+        self.webdriver.get('http://wwww.github.com') #it's ok
+        self.webdriver = '...' #it's forbiden because you break the life cycle.
+    
+    def tearDown(self):
+        self.webdriver... #it's ok
+        self.webdriver.quit() #it's forbiden because you break the life cycle too.
+    
+    def test_google(self):
+        url = 'https://www.google.fr/'
+        self.webdriver.get(url)
+        self.assertEqual(url, self.webdriver.current_url)
+
+```
+
