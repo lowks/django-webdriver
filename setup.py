@@ -10,7 +10,7 @@ def README():
 
 setup(
     name='django-webdriver',
-    version='0.1.1',
+    version='0.1.2-dev',
     packages=find_packages(),
     include_package_data=True,
     license='Apache License 2.0',
