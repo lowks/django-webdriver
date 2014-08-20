@@ -1,4 +1,5 @@
 # django-webdriver
+[![pypi version](http://img.shields.io/pypi/v/django-webdriver.svg)](https://pypi.python.org/pypi/django-webdriver) [![pypi download week](http://img.shields.io/pypi/dw/django-webdriver.svg)](https://pypi.python.org/pypi/django-webdriver)
 
 Django app to run selenium tests with webdriver
 
