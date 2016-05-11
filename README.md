@@ -104,11 +104,11 @@ class TestSelenium(DjangoWebdriverTestCase):
 
     def setUp(self):
         self.webdriver.get('http://wwww.github.com') #it's ok
-        self.webdriver = '...' #it's forbiden because you break the life cycle.
+        self.webdriver = '...' #it's forbidden because you break the life cycle.
     
     def tearDown(self):
         self.webdriver... #it's ok
-        self.webdriver.quit() #it's forbiden because you break the life cycle too.
+        self.webdriver.quit() #it's forbidden because you break the life cycle too.
     
     def test_google(self):
         url = 'https://www.google.fr/'
